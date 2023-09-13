@@ -10,15 +10,17 @@ const string JIEBA_USER_DICT_PATH = "./dict/user.dict.utf8";
 const string JIEBA_IDF_PATH = "./dict/idf.utf8";
 const string JIEBA_STOP_WORD_PATH = "./dict/stop_words.utf8";
 
+
 int main(int argc, char* argv[]) {
     // handle shell parameters
-    if(argc < 4) return 0;
+    if (argc < 4) return 0;
     string origin_path = string(argv[1]);
     string target_path = string(argv[2]);
     string answer_path = string(argv[3]);
-        
+
     cppjieba::Jieba jb(JIEBA_DICT_PATH, JIEBA_MODEL_PATH, JIEBA_USER_DICT_PATH, JIEBA_IDF_PATH, JIEBA_STOP_WORD_PATH);
-    SimilarityDetection sd(jb);
+    wstring_convert<codecvt_utf8<wchar_t>> cvt;
+    SimilarityDetection sd(&jb, &cvt);
     const string origin = load_text(origin_path);
     const string target = load_text(target_path);
     sd.set_two_strings(origin, target);

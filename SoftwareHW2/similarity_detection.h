@@ -3,16 +3,16 @@
 
 #include <codecvt>
 #include <vector>
-#include <cvt/wstring>
+#include <locale>
 
 #include "cppjieba/Jieba.hpp"
 
 class SimilarityDetection {
 private:
     // 分词库实例
-    cppjieba::Jieba jieba_;
+    cppjieba::Jieba* jieba_;
     // 转换器，用于中文宽字符和utf8之间转换
-    stdext::cvt::wstring_convert<std::codecvt_utf8<wchar_t>> cvt_;
+    std::wstring_convert<std::codecvt_utf8<wchar_t>>* cvt_;
     // 原文
     std::string origin_;
     // 目标文章
@@ -28,9 +28,11 @@ private:
     // 字符串预处理
     //  - origin 原文字符串
     //  - return 处理之后的字符串
-    std::vector<std::vector<std::string>> preprocess_string(const std::string& origin);
+    std::vector<std::string> preprocess_string(const std::string& origin);
+
 public:
-    SimilarityDetection(cppjieba::Jieba& jieba) : jieba_(jieba) { }
+    inline SimilarityDetection(cppjieba::Jieba* jieba, std::wstring_convert<std::codecvt_utf8<wchar_t>>* cvt)
+        : jieba_(jieba), cvt_(cvt) { }
 
     // 设置两个字符串
     //  - origin 原文字符串
