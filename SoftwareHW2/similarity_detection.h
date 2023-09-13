@@ -18,12 +18,12 @@ private:
     // 目标文章
     std::string target_;
     // 相似度
-    double similarity = -1;
+    double similarity_ = -1;
 
     // 余弦相似度算法本体
     //  - origin 原文字符串
     //  - target 目标字符串
-    double cosine_similarity(const std::string& origin, const std::string& target);
+    double cosine_similarity(const std::vector<std::string>& origin, const std::vector<std::string>& target);
 
     // 字符串预处理
     //  - origin 原文字符串
