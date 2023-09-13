@@ -7,9 +7,9 @@ using namespace std;
 
 double SimilarityDetection::cosine_similarity(const string& origin, const string& target) {}
 
-vector<string> SimilarityDetection::preprocess_string(const string& origin) {
+vector<vector<string>> SimilarityDetection::preprocess_string(const string& origin) {
     const wstring ws = cvt_.from_bytes(origin);
-    vector<string> ret;
+    vector<vector<string>> ret;
     wstring preprocess;
     for (const wchar_t ch : ws) {
         if (iswpunct(ch) || iswspace(ch)) continue;
@@ -20,7 +20,9 @@ vector<string> SimilarityDetection::preprocess_string(const string& origin) {
         preprocess.push_back(ch);
         if (ch != L'\n') continue;
         preprocess.push_back(L'\0');
-        ret.push_back(cvt_.to_bytes(preprocess));
+        vector<string> cut;
+        jieba_.Cut(cvt_.to_bytes(preprocess), cut);
+        ret.push_back(cut);
         preprocess.clear();
     }
     return ret;
