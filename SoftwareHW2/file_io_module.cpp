@@ -5,7 +5,7 @@
 
 using namespace std;
 
-string load_text(string& path) {
+string load_text(const string& path) {
     ifstream file;
     file.open(path, ios::in);
     string ret = "";
@@ -17,7 +17,7 @@ string load_text(string& path) {
     return ret;
 }
 
-void write_answer(string& path, double similarity) {
+void write_answer(const string& path, double similarity) {
     ofstream file;
     file.open(path, ios::out);
     file << fixed << setprecision(2) << similarity << endl;
